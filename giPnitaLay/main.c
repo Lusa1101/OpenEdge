@@ -6,18 +6,23 @@
 
 int returnNumberOfSpaces(char*);
 char* returnReversedWord(char*, int);
+char* returnSwappedWord(char*, int);
 char* returnModifiedWord(char*, bool);
 char* returnWord(int, int, char*);
 bool isVowel(char);
 
 int main () {
 //                "01 2 45 78910 1213 15_16_17_18_19_20"
-    char* input = "Hi, my name is Omphulusa.";
+    char* input = malloc(200 * sizeof(char));
     char* result;
     int number_of_words;
     int length_of_input;
 
     printf("Hello, this program is created for translating a given sentence into PigLatin.\n");
+
+    // Get input 
+    printf("\nPlease enter your sentence: ");
+    scanf("%99[^\n]", input);
 
     // Get number of chars in the sentence 
     length_of_input = strlen(input) + 1;
@@ -45,23 +50,16 @@ int main () {
 
         start = index;
         while (input[index] != ' ') {
-            // Chack for the EOF of the input
+            // Check for the EOF of the input
             if (input[index] == '\0')
                 break;
 
-            // if (ispunct(input[index])) {
-            //     index -= 1;
-            //     // printf("The input is special char/ punctuation: %c", input[index]);
-            // }
-
-            // word[end] = input[index];
-            // printf("[%d] New string (%d): %s\n", i, index, word);
             index++;
             end++;
         }
 
         // Checks
-        printf("\n[%d]: Start(%d) and End(%d)", i, start, end);
+        // printf("\n[%d]: Start(%d) and End(%d)", i, start, end);
 
         // Get the word
         int len = (end - start);
@@ -76,7 +74,7 @@ int main () {
         beginsWithVowel = isVowel(tolower(temp_word[0]));
 
         // The reversed word
-        temp_word = returnReversedWord(temp_word, len);
+        temp_word = returnSwappedWord(temp_word, len);
         printf("\nReverded Word [%d]: %s", i, temp_word);
 
         // The modified word
@@ -129,6 +127,40 @@ int returnNumberOfSpaces(char* string) {
 
     return count;
 }
+
+char* returnSwappedWord(char* word, int length) {
+    char* reversed_word = malloc(length * sizeof(char));
+    int index = 0;
+    char punctuation;
+    bool punct_available = false;
+    char temp;
+
+    // If starts with a vowel, return as it is
+    if (isVowel(tolower(word[0]))) 
+        return word;
+
+    if (ispunct(word[length - 1])) {
+        punctuation = word[length -1];
+        length -= 1;
+        punct_available = true;
+    }
+
+    // Move the consonant to the end of the word
+    temp = word[0];
+    for (int i = 1; i < length && word[i] != '\0'; index++, i++) {
+        reversed_word[index] = word[i];
+    }
+
+    reversed_word[length - 1] = temp;
+    index += 1; 
+
+    if (punct_available) {
+        reversed_word[index] = punctuation;
+    }
+
+    return reversed_word;
+}
+
 
 char* returnReversedWord(char* word, int length) {
     char* reversed_word = malloc(length * sizeof(char));
