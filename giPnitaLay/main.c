@@ -145,14 +145,25 @@ char* returnSwappedWord(char* word, int length) {
         punct_available = true;
     }
 
+    // Get the consonant cluster in the beginning of the word
+    int cluster_size = 0;
+    char* cluster = malloc(5 * sizeof(char));
+    while (!isVowel(tolower(word[cluster_size]))) {
+        cluster[cluster_size] = word[cluster_size];
+        cluster_size++;
+    }
+
+    // Reverse the cluster
+    // cluster = returnReversedWord(cluster, cluster_size);
+
     // Move the consonant to the end of the word
     temp = word[0];
-    for (int i = 1; i < length && word[i] != '\0'; index++, i++) {
+    for (int i = cluster_size; i < length && word[i] != '\0'; index++, i++) {
         reversed_word[index] = word[i];
     }
 
-    reversed_word[length - 1] = temp;
-    index += 1; 
+    reversed_word = strcat(reversed_word, cluster);
+    index += cluster_size; 
 
     if (punct_available) {
         reversed_word[index] = punctuation;
