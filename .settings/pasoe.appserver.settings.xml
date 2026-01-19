@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<module-content version="12.8">
+    <module id="9f6856e3-142e-4a2b-bdfa-a419bd4c0129" name="Learning">
+        <resource path="AppServer" publish="true"/>
+    </module>
+</module-content>
